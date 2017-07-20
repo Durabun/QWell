@@ -16,6 +16,25 @@ def Evenroot(x,r):
 def Oddroot(x,r):
 	return -x*((np.cos(x))/(np.sin(x)))-np.sqrt(r**2-x**2)
 
+#This fn is for determining the value of the even root curve. It is in fact non dimensionalized
+def ErootY(x):
+        return x*(np.sin(x))/(np.cos(x))
+
+#This is the fn for determining the value of the odd root curve.
+def OrootY(x):
+        return -x*(np.cos(x))/(np.sin(x))
+
+#This is to determine the propagation "K" vector. Units are in inverse Angstrom
+def PropVec(x,a):
+    return x/(a*10**(10))
+
+#This is to determine the tunneling "k" vector (yeah, notation sucks). Units are in inverse Angstrom
+def TunVec(y,a):
+    return y/(a*10**(10))
+
+#This function is for determining the energy of each state.
+def Energy(y,p,V):
+    return V*(y/p)**2
 
 #The function below determines the radius of possible roots based on the parameters of the particle and the potential well
 def radius(m,a,V):
@@ -31,14 +50,20 @@ while R > i*np.pi:
 while R > (1+2*j)*np.pi/2:
 	j = j+1
 
-print str(i+j)+" root(s) in total."
+print(str(i+j)+" root(s) in total.")
 
 
-evenRoot = np.zeros(i)
-oddRoot = np.zeros(j)
+evenRootX = np.zeros(i)
+evenRootY = np.zeros(i)
+oddRootX = np.zeros(j)
+oddRootY = np.zeros(j)
+propagationVector = np.zeros(i+j)
+tunnelVector = np.zeros(i+j)
 
 ie = 0
 jo = 0
+ip = 0 #propagation vector index
+it = 0 #tunnel vector index
 dx = 0.1
 
 #Test Cases for the initial case I worked on in my final
@@ -49,7 +74,11 @@ def rootT(x):
 
 def OrootT(x):
 	return -x*((np.cos(x))/(np.sin(x)))-np.sqrt((4)**2-x**2)
-evenRoot[ie] = newton(rootT,1+dx)
+evenRootX[ie] = newton(rootT,1+dx)
+evenRootY[ie] = ErootY(evenRootX[ie])
+propagationVector[ip] = PropVec(evenRootX[ie],(4.69*10**(-11)))
+tunnelVector[it] = TunVec(evenRootY[ie],(4.69*10**(-11)))
+
 #print newton(rootT,np.pi)
 #print newton(OrootT,0.5*np.pi+3*dx)
 #print newton(OrootT,1.5*np.pi+dx)
@@ -57,14 +86,20 @@ evenRoot[ie] = newton(rootT,1+dx)
 ie = 1
 while i>ie:
 	if R > ie*np.pi:
-		evenRoot[ie] = newton(rootT,ie*np.pi+dx)	
-		ie = ie+1
+            evenRootX[ie] = newton(rootT,ie*np.pi+dx)
+            evenRootY[ie] = ErootY(evenRootX[ie])
+            ie = ie+1
+
 while j>jo:
 	if R > (1+2*jo)*np.pi/2:
-		oddRoot[jo] = newton(OrootT,(1+2*jo)*np.pi/2+2*2*dx)
-		jo=jo+1
+            oddRootX[jo] = newton(OrootT,(1+2*jo)*np.pi/2+2*2*dx)
+            oddRootY[jo] = OrootY(oddRootX[jo])
+            jo=jo+1
 
 
-print evenRoot
-print oddRoot
-
+print (evenRootX)
+print (evenRootY)
+print (oddRootX)
+print (oddRootY)
+print (propagationVector)
+print(tunnelVector)
