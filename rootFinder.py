@@ -20,10 +20,21 @@ def Oddroot(r):
 #The function below determines the radius of possible roots based on the parameters of the particle and the potential well
 def radius(m,a,V):
 	return np.sqrt((2*m*np.absolute(V)*a**2)/h_bar**2)
+	
+def energy(y,r,V):
+	return np.absolute(V)*(y/r)**2
+
+def radFunction(x,r):
+	return np.sqrt(r**2-x**2)
+
+def propVector(x,a):
+	return (x/a)*10**(-10)
+
+def tunnelVector(y,a):
+	return (y/a)*10**(-10)
 
 #Definition of the root radius. This will be determined by the user
-#R = radius((206.8*9.11*10**(-31)),(4.69*10**(-11)),(1.6022*10**(-19)))
-R = 10
+R = radius((206.8*9.11*10**(-31)),(4.69*10**(-11)),(1.6022*10**(-19)))
 x = 0
 i = 1
 j = 0
@@ -98,3 +109,18 @@ print (evenRoot)
 print (oddRoot)
 #print (x0)
 
+#initialize Even and Odd States
+Even_State = np.zeros(i)
+Odd_State = np.zeros(j)
+#initialize Even and Odd tunnel vectors
+tunnelEven = np.zeros(i)
+tunnelOdd = np.zeros(j)
+#initialize Even and Odd propagation vectors
+propEven = np.zeros(i)
+propOdd = np.zeros(j)
+
+
+print (energy(radFunction(evenRoot[0],R),R,1))
+print (tunnelVector(radFunction(evenRoot[0],R),4.69*10**(-11)))
+print (propVector(evenRoot[0],4.69*10**(-11)))
+#print (radFunction(evenRoot[0],R))
