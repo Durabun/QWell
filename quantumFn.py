@@ -4,6 +4,10 @@ from scipy.optimize import*
 
 #For a one dimensional well...
 
+
+h = 6.626*10**(-34) #These are some constants
+h_bar = h/(2*np.pi) #Specifically, Planck's Constant
+
 #The fn below defines the even root function
 def Evenroot(r):
 	return lambda x:x*((np.sin(x))/(np.cos(x)))-np.sqrt(r**2-x**2)
@@ -23,6 +27,7 @@ def radius(m,a,V):
 #This function is used to determine the energy of the state
 def energy(y,r,V):
 	return np.absolute(V)*(y/r)**2
+
 #This function is used to determine the "Y" value of the root
 #Needed for the energy and for the tunneling vector
 def radFunction(x,r):
@@ -56,7 +61,6 @@ _________         __________
 	|         |
 	|    	  |
       -a|____0____|a
-
 '''
 	
 	
