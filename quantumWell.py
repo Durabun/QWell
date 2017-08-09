@@ -43,8 +43,9 @@ ie = 0
 jo = 0
 #This is an interative root finder
 #With an x0 used as an initial guess for the Newton function
-dx = 0.01
-x0 = 0.01
+
+dx = 0.0001 #This value has to be smaller to resolve bigger
+x0 = 0.000  #Scenarios!
 
 #Used the Even/Odd root functions to establish a function
 #With the radius as the parameter and "x" as a variable
@@ -54,8 +55,10 @@ ORoot = quantumFn.Oddroot(R)
 #Since there will always be one root, this while loop
 #Searches for the first even root, and then puts it into
 #The evenRoot array
-while np.absolute(ERoot(x0)) > 0.5:
-	x0 = x0 + dx
+while np.absolute(ERoot(x0)) > 0.05: #This value has to
+	x0 = x0 + dx		     #Be small to resolve
+print (x0)			     #Smaller scenarios!
+print (R)
 evenRoot[ie] = newton(ERoot,x0)
 
 #If there is another even root, it will go into index 1
