@@ -1,3 +1,9 @@
+#QWell 0.5, the quantum well simulator!
+#Made by Jonathan Eugenio
+#And Mark Romero
+
+#Please refer to the license in the github repo (https://github.com/Durabun/QWell.git)
+
 import numpy as np
 from os import system
 from scipy.optimize import*
@@ -26,7 +32,7 @@ def radius(m,a,V):
 	
 #This function is used to determine the energy of the state
 def energy(y,r,V):
-	return np.absolute(V)*(y/r)**2
+	return (1/(1.602*10**(-19)))*np.absolute(V)*(y/r)**2
 
 #This function is used to determine the "Y" value of the root
 #Needed for the energy and for the tunneling vector
@@ -63,7 +69,13 @@ _________         __________
       -a|____0____|a
 '''
 	
-	
+
+#B coefficient for the even waves
+def Beven(a,k,K):
+	return 1/np.sqrt((4*(np.cos(a*k))**2/K)+(2/k)*(2*a*k+np.sin(2*a*k)))
+#B coefficient for the odd waves
+def Bodd(a,k,K):
+	return 1/np.sqrt((4*(np.sin(a*k))**2/K)+4*(a-(np.sin(2*a*k))/(2*k)))
 	
 	
 #The following set of functions define the wavefunction
