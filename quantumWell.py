@@ -45,7 +45,7 @@ jo = 0
 #With an x0 used as an initial guess for the Newton function
 
 dx = 0.0001 #This value has to be smaller to resolve bigger
-x0 = 0.000  #Scenarios!
+x0 = 0.0001  #Scenarios!
 
 #Used the Even/Odd root functions to establish a function
 #With the radius as the parameter and "x" as a variable
