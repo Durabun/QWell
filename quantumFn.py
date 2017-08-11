@@ -83,18 +83,32 @@ def Bodd(a,k,K):
 #Denoting an even or odd function for the respective root
 def ef1(B,K,k,a):
 	return lambda x: 2*B*np.exp((a+x)*K)*np.cos(a*k)
+def ep1(B,K,k,a):
+	return lambda x: (2*B*np.exp((a+x)*K)*np.cos(a*k))**2
 	
 def ef2(B,k):
 	return lambda x: 2*B*np.cos(k*x)	
+def ep2(B,k):
+	return lambda x: (2*B*np.cos(k*x))**2	
 	
 def ef3(B,K,k,a):
 	return lambda x: 2*B*np.exp((a-x)*K)*np.cos(a*k)	
+def ep3(B,K,k,a):
+	return lambda x: (2*B*np.exp((a-x)*K)*np.cos(a*k))**2
 	
 def of1(B,K,k,a):
 	return lambda x: -2*B*np.exp((a+x)*K)*np.sin(a*k)
+
+def op1(B,K,k,a):
+	return lambda x: (-2*B*np.exp((a+x)*K)*np.sin(a*k))**2
 	
 def of2(B,k):
 	return lambda x: 2*B*np.sin(k*x)	
+def op2(B,k):
+	return lambda x: (2*B*np.sin(k*x))**2	
 	
 def of3(B,K,k,a):
 	return lambda x: 2*B*np.exp((a-x)*K)*np.sin(a*k)
+
+def op3(B,K,k,a):
+	return lambda x: (2*B*np.exp((a-x)*K)*np.sin(a*k))**2
