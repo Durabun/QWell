@@ -72,13 +72,13 @@ x0 = (1+2*jo)*np.pi/2
 #It goes in the order of looking for an odd root
 #And then an even root.
 while x0 < R:
-	while np.absolute(ORoot(x0)) > 0.25:
+	while np.absolute(ORoot(x0)) > 0.05:
 		x0 = x0 + dx
 	oddRoot[jo] = newton(ORoot,x0)
 	jo = jo +1
 	x0 = ie*np.pi #Resets the initial guess to next possible value
 	if x0 < R:
-		while np.absolute(ERoot(x0)) > 0.25:
+		while np.absolute(ERoot(x0)) > 0.05:
 			x0 = x0 +dx
 		evenRoot[ie] = newton(ERoot,x0)
 		ie = ie +1
@@ -143,9 +143,9 @@ print ("Energies")
 print (StateEnergy)
 
 z = 0
-r1 = np.arange((-5*a*10**(10)),(-a*10**(10)),0.001)
-r2 = np.arange((-a*10**(10)),(a*10**(10)),0.001)
-r3 = np.arange((a*10**(10)),(5*a*10**(10)),0.001)
+r1 = np.arange((-2*a*10**(10)),(-a*10**(10)),0.0001)
+r2 = np.arange((-a*10**(10)),(a*10**(10)),0.0001)
+r3 = np.arange((a*10**(10)),(2*a*10**(10)),0.0001)
 color = ["r","b","g","c","m","y","k"] #This is the color array
 
 c = 0
