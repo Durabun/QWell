@@ -12,7 +12,8 @@ Well now you can, with this app, coming soon!
 
 ## Current Features
 * User defines the scenario, with the mass of the particle, the energy depth (in eV), and the half width well
-* Plots each energy state with the representative wave function
+* Plots each energy state with the representative wave function or density distribution function
+* With Kivy, there is now a graphical interface for inputting parameters (9/6/2017)
 
 ## Future features
 * Incorporate probability functions
