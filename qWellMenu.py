@@ -35,30 +35,13 @@ class QwellMenu(App):
 		layout.add_widget(self.hWidth)
 		self.popup = Popup(title = 'Test popup')
 		GoBtn = Button(text = 'GO!')
-#		GoBtn.bind(on_release = self.callback)
 		GoBtn.bind(on_release = self.main)
 		layout.add_widget(GoBtn)
 		anchor = AnchorLayout(anchor_x = 'center', anchor_y = 'bottom')
 		btn = Button(text = ('test'))
 		anchor.add_widget(btn)	
 		
-
 		return layout
-		return anchor
-	
-#	def callback(self,btn):
-#		print("Mass is "+self.Mass.text)
-#		print("Depth is "+self.Depth.text)
-#		print("Half Width is "+self.hWidth.text)
-#	
-#	def plot(self,btn):
-#		m = float(self.Mass.text)
-#		d = float(self.Depth.text)
-#		a = float(self.hWidth.text)
-#		t = np.arange(0.0,2.0,0.01)
-#		s = a+np.sin(m*d*np.pi*t)
-#		plt.plot(t,s)
-#		return plt.show()
 
 	#This is the main function
 	#That consists of most of the code
@@ -89,7 +72,7 @@ class QwellMenu(App):
 		#With an x0 used as an initial guess for the Newton function
 
 		dx = 0.0001 #This value has to be smaller to resolve bigger
-		x0 = 0.0001  #Scenarios!
+		x0 = 0.0000  #Scenarios!
 
 		#Used the Even/Odd root functions to establish a function
 		#With the radius as the parameter and "x" as a variable
