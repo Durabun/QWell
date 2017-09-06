@@ -1,0 +1,38 @@
+QWellInit:
+
+<QWellInit>:
+	orientation: "vertical"
+	mass_input: mass
+	depth_input: depth
+	width_input: width
+#	well_status: status
+	BoxLayout:
+		Label:
+			text: "Mass"
+		TextInput:
+			id: mass
+	BoxLayout:
+		Label:
+			text: "Depth"
+		TextInput:
+			id: depth
+	BoxLayout:
+		Label:
+			text: "Width"
+		TextInput:
+			id: width
+	BoxLayout:
+		Button:
+			text: "GO!"
+			on_press: root.status_change()
+			on_release: root.main()
+		BoxLayout:
+			Label:
+				text_size: self.size
+				halign: 'center'
+				valign: 'center' 	
+				text: "This is the quantum well sim! Mass is defined in terms of the electron mass. Depth is defined in terms of electron volts (eV) and the width is the half well width, defined in angstrom."
+			Label:
+				id: status	
+				text: root.well_status
+
