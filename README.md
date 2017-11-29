@@ -15,7 +15,12 @@ Well now you can, with this app, coming soon!
 * Plots each energy state with the representative wave function or density distribution function
 * With Kivy, there is now a graphical interface for inputting parameters (9/6/2017)
 
+## In Development
+* Linear Potential Well, with root finder and constants defined (11/29/2017)
+* LPW wavefunction plots are currently in development
+* Ideally this would be ported into the Kivy interface
+
 ## Future features
-* Incorporate probability functions
-* Incorporate user defines perturbations
+* Incorporate user defined perturbations
 * More particles == more fun!
+* Multiple barriers
