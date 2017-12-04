@@ -1,37 +1,24 @@
 import numpy as np
 import matplotlib.pyplot as plt
-from scipy.special import*
 from scipy.optimize import*
+from scipy.special import*
 
-r = np.arange(-10,0,0.1)
-X = np.arange(0.1,10,0.1)
-
-V = 10*1.602*10**(-19)
-a = 0.5*10**(-10)
+V = (1.602*10**(-19))*float(input("Depth? "))
+m = (9.11*10**(-31))*float(input("Mass? "))
+a = (10**(-10))*float(input("Half Width? "))
 beta = V/a
-m = 2006*9.11*10**(-31)
 hb = (6.626*10**(-34))/(2*np.pi)
-alpha = ((2*m*beta)/hb**2)**(1./3)
+alpha = ((2*m*beta)/(hb**2))**(1./3)
 
-def Sing():
-	return lambda x: airy(-x)
-
-def Doub(alpha,a):
-	return lambda x: airy(alpha*a-x)
-
-def KVec(alpha,a):
-	return lambda x: (alpha**3*a-alpha**2*x)**(1./2)
-
-A = Sing()
-B = Doub(alpha,a)
-K = KVec(alpha,a)
+#Defining functions
+#These can probably be tossed into a separate file
 
 def SingAi(x):
 	return airy(-x)[0]
-def SingBi(x):
-	return airy(-x)[2]
 def SingAip(x):
 	return airy(-x)[1]
+def SingBi(x):
+	return airy(-x)[2]
 def SingBip(x):
 	return airy(-x)[3]
 
@@ -47,63 +34,57 @@ def DoubBip(alpha,a,x):
 def Kvector(alpha,a,x):
 	return (alpha**3*a-alpha**2*x)**(1./2)
 
+#These are the root functions
 def EvenR(alpha,a,x):
 	return Kvector(alpha,a,x)*(SingAip(x)*DoubBi(alpha,a,x)-SingBip(x)*DoubAi(alpha,a,x))+alpha*(SingAip(x)*DoubBip(alpha,a,x)-SingBip(x)*DoubAip(alpha,a,x))
 
 def OddR(alpha,a,x):
 	return Kvector(alpha,a,x)*(SingAi(x)*DoubBi(alpha,a,x)-SingBi(x)*DoubAi(alpha,a,x))+alpha*(SingAi(x)*DoubBip(alpha,a,x)-SingBi(x)*DoubAip(alpha,a,x))
 
+#Defining Energy and the rest of the constants
 def Energy(alpha,b,x):
 	return (x*b/alpha)
 
 def TrueKV(alpha,V,m,E):
 	return (2*m*(V-E)/hb**2)**(1./2)
 
-
-#These are the Even Constants
 def deltaE(alpha,beta,E):
 	return -(airy(-alpha*E/beta)[1])/(airy(-alpha*E/beta)[3])
 
-def etaE(alpha,beta,delta,a,E,K):
-	return (airy(alpha*(a-E/beta))[0]+delta*airy(alpha*(a-E/beta))[2])*np.exp(K*a)
-
-
-#These are the Odd Constants
 def deltaO(alpha,beta,E):
 	return -(airy(-alpha*E/beta)[0])/(airy(-alpha*E/beta)[2])
-#Eta is the same for Even and Odd functions
-def etaO(alpha,beta,delta,a,E,K):
-	return (airy(alpha*(a-E/beta))[0]+float(delta)*airy(alpha*(a-E/beta))[2])*np.exp(K*a)
 
+def eta(alpha,beta,delta,a,E,K):
+	return (airy(alpha*(a-E/beta))[0]+delta*airy(alpha*(a-E/beta))[2])*np.exp(K*a)
 
-#Even Wavefunction
+#Defining the Wave Functions
+#Even
 def Psi1E(eta,K):
-	return lambda x: eta*np.exp(K*x)
+	return lambda x: eta*np.exp(10**(-10)*K*x)
 
 def Psi2E(alpha,beta,delta,E):
-	return lambda x: airy(alpha*(-x-E/beta))[0]+delta*airy(alpha*(-x-E/beta))[2]
+	return lambda x: airy(alpha*10**(-10)*(-x-10**(10)*E/beta))[0]+delta*airy(alpha*10**(-10)*(-x-10**(10)*E/beta))[2]
 
 def Psi3E(alpha,beta,delta,E):
-	return lambda x: airy(alpha*(x-E/beta))[0]+delta*airy(alpha*(x-E/beta))[2]
+	return lambda x: airy(alpha*10**(-10)*(x-10**(10)*E/beta))[0]+delta*airy(alpha*10**(-10)*(x-10**(10)*E/beta))[2]
 
 def Psi4E(eta,K):
-	return lambda x: eta*np.exp(-K*x)
+	return lambda x: eta*np.exp(-10**(-10)*K*x)
 
-
-#Odd Wavefunction
+#Odd
 def Psi1O(eta,K):
-	return lambda x: -eta*np.exp(K*x)
+	return lambda x: -eta*np.exp(10**(-10)*K*x)
 
 def Psi2O(alpha,beta,delta,E):
-	return lambda x: -airy(alpha*(-x-E/beta))[0]-delta*airy(alpha*(-x-E/beta))[2]
+	return lambda x: -airy(alpha*10**(-10)*(-x-10**(10)*E/beta))[0]-delta*airy(alpha*10**(-10)*(-x-10**(10)*E/beta))[2]
 
 def Psi3O(alpha,beta,delta,E):
-	return lambda x: airy(alpha*(x-E/beta))[0]+delta*airy(alpha*(x-E/beta))[2]
+	return lambda x: airy(alpha*10**(-10)*(x-10**(10)*E/beta))[0]+delta*airy(alpha*10**(-10)*(x-10**(10)*E/beta))[2]
 
 def Psi4O(eta,K):
-	return lambda x: eta*np.exp(-K*x)
+	return lambda x: eta*np.exp(-10**(-10)*K*x)
 
-
+#Root finding
 S = 0
 x0 = 0.5
 dx = 0.01
@@ -160,6 +141,9 @@ while (T==0):
 print("There are "+str(S)+" roots")
 i = 0
 x0 = 0.5
+
+#These arrays hold the Energies and other constants for each state
+#Based on the flow of the program, these can all be defined one fell swoop
 Roots = np.zeros(S)
 Energies = np.zeros(S)
 Kvect = np.zeros(S)
@@ -172,9 +156,8 @@ while (i != S):
 			EvenR(alpha,a,x0)
 			EvenR(alpha,a,x0+dx)
 		except:
-			print("Fail1")
 			break
-		while (np.sign(EvenR(alpha,a,x0))==np.sign(EvenR(alpha,a,x0+dx))):
+		while (np.sign(EvenR(alpha,a,x0)) == np.sign(EvenR(alpha,a,x0+dx))):
 			try:
 				EvenR(alpha,a,x0)
 				EvenR(alpha,a,x0+dx)
@@ -186,16 +169,15 @@ while (i != S):
 				EvenR(alpha,a,x0+dx)
 			except:
 				break
-
+		
 		if (i==S):
 			break
-
 		Roots[i] = newton(lambda x: EvenR(alpha,a,x),x0)
-		Energies[i] = Energy(alpha,beta,Roots[i]) 
+		Energies[i] = Energy(alpha,beta,Roots[i])
 		Kvect[i] = TrueKV(alpha,V,m,Energies[i])
 		Delta[i] = deltaE(alpha,beta,Energies[i])
-		Eta[i] = etaE(alpha,beta,Delta[i],a,Energies[i],Kvect[i])
-		
+		Eta[i] = eta(alpha,beta,Delta[i],a,Energies[i],Kvect[i])
+
 		i = i+1
 
 	try:
@@ -208,8 +190,8 @@ while (i != S):
 
 	if (i%2 != 0):
 		try:
-			OddR(alpha,a,x0+dx)
 			OddR(alpha,a,x0)
+			OddR(alpha,a,x0+dx)
 		except:
 			break
 		while (np.sign(OddR(alpha,a,x0)) == np.sign(OddR(alpha,a,x0+dx))):
@@ -224,14 +206,14 @@ while (i != S):
 				OddR(alpha,a,x0+dx)
 			except:
 				break
-		if(i == S):
+		if (i == S):
 			break
-
+		
 		Roots[i] = newton(lambda x: OddR(alpha,a,x),x0)
 		Energies[i] = Energy(alpha,beta,Roots[i])
 		Kvect[i] = TrueKV(alpha,V,m,Energies[i])
 		Delta[i] = deltaO(alpha,beta,Energies[i])
-		Eta[i] = etaO(alpha,beta,Delta[i],a,Energies[i],Kvect[i])
+		Eta[i] = eta(alpha,beta,Delta[i],a,Energies[i],Kvect[i])
 
 		i = i+1
 
@@ -248,45 +230,53 @@ print(Energies)
 print(Kvect)
 print(Delta)
 print(Eta)
+	
 
-Even = K(X)*(A(X)[1]*B(X)[2]-A(X)[3]*B(X)[0])+alpha*(A(X)[1]*B(X)[3]-A(X)[3]*B(X)[1])
+z = 0
+c = 0
+dy = 0
 
-Odd = K(X)*(A(X)[0]*B(X)[2]-A(X)[2]*B(X)[0])+alpha*(A(X)[0]*B(X)[3]-A(X)[2]*B(X)[1])
+r1 = np.arange((-2*a*10**(10)),(-a*10**(10)),0.00001)
+r2 = np.arange((-a*10**(10)),0,0.00001)
+r3 = np.arange(0,(a*10**(10)),0.00001)
+r4 = np.arange((a*10**(10)),(2*a*10**(10)),0.00001)
+color = ["r","b","g","c","m","y","k"]
 
-r1 = np.arange(-2*0.5,-0.5,0.00001)
-r2 = np.arange(-0.5,0,0.00001)
-r3 = np.arange(0,0.5,0.00001)
-r4 = np.arange(0.5,1,0.00001)
-#Atry = 0.5
+#Plot function
+while z < S:
+	if c == 6:
+		c = 0
+	if z%2 == 1:
+		dy = (1/(1.602*10**(-19)))*Energies[z]
+		plt1 = Psi1O(Eta[z],Kvect[z]) 
+		plt2 = Psi2O(alpha,beta,Delta[z],Energies[z])
+		plt3 = Psi3O(alpha,beta,Delta[z],Energies[z])
+		plt4 = Psi4O(Eta[z],Kvect[z])
 
-#plt.plot(X,Even)
-#plt.plot(X,Odd)
-#plt.plot((0,5),(0,0))
-#E1 = Psi1E(Eta[0],Kvect[0])
-#E2 = Psi2E(alpha,beta,Delta[0],Energies[0])
-#E3 = Psi3E(alpha*10**(-10),beta*10**(10),Delta[0],10**(10)*Energies[0])
-#E4 = Psi4E(Eta[0],Kvect[0])
+		plt.plot(r1,plt1(r1)+dy,color[c],r2,plt2(r2)+dy,color[c],r3,plt3(r3)+dy,color[c],r4,plt4(r4)+dy,color[c])
+	else:
+		dy = (1/(1.602*10**(-19)))*Energies[z]
+		plt1 = Psi1E(Eta[z],Kvect[z]) 
+		plt2 = Psi2E(alpha,beta,Delta[z],Energies[z])
+		plt3 = Psi3E(alpha,beta,Delta[z],Energies[z])
+		plt4 = Psi4E(Eta[z],Kvect[z])
 
-Trial = lambda x: airy(alpha*10**(-10)*(x-10**(10)*Energies[0]/beta))[0]+Delta[0]*airy(alpha*10**(-10)*(x-10**(10)*Energies[0]/beta))[2]
+		plt.plot(r1,plt1(r1)+dy,color[c],r2,plt2(r2)+dy,color[c],r3,plt3(r3)+dy,color[c],r4,plt4(r4)+dy,color[c])
 
-TrialM = lambda x: airy(alpha*10**(-10)*(-x-10**(10)*Energies[0]/beta))[0]+Delta[0]*airy(alpha*10**(-10)*(-x-10**(10)*Energies[0]/beta))[2]
-
-TrialO = lambda x: airy(alpha*10**(-10)*(x-10**(10)*Energies[1]/beta))[0]+Delta[1]*airy(alpha*10**(-10)*(x-10**(10)*Energies[1]/beta))[2]
-
-TrialOM = lambda x: -airy(alpha*10**(-10)*(-x-10**(10)*Energies[1]/beta))[0]-Delta[1]*airy(alpha*10**(-10)*(-x-10**(10)*Energies[1]/beta))[2]
-
-plt.plot(r1,Eta[0]*np.exp(10**(-10)*Kvect[0]*r1),"r")
-plt.plot(r2,TrialM(r2),"r")
-plt.plot(r3,Trial(r3),"r")
-plt.plot(r4,Eta[0]*np.exp(-10**(-10)*Kvect[0]*r4),"r")
-
-plt.plot(r1,-Eta[1]*np.exp(10**(-10)*Kvect[1]*r1),"g")
-plt.plot(r2,TrialOM(r2),"g")
-plt.plot(r3,TrialO(r3),"g")
-plt.plot(r4,Eta[1]*np.exp(-10**(-10)*Kvect[1]*r4),"g")
-
-
-
-
+	z = z+1
+	c = c+1
 
 plt.show()
+	
+
+
+
+
+
+
+
+
+
+
+
+
