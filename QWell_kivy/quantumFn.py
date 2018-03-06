@@ -4,6 +4,9 @@
 
 #Please refer to the license in the github repo (https://github.com/Durabun/QWell.git)
 
+#This version of the quantum well sim will use natural units
+#h_bar = c = 1
+
 import numpy as np
 from os import system
 from scipy.optimize import*
@@ -11,8 +14,11 @@ from scipy.optimize import*
 #For a one dimensional well...
 
 
-h = 6.626*10**(-34) #These are some constants
-h_bar = h/(2*np.pi) #Specifically, Planck's Constant
+#h = 6.626*10**(-34) #These are some constants
+#h_bar = h/(2*np.pi) #Specifically, Planck's Constant
+
+h_bar = 1 #Natural unit!
+
 
 #The fn below defines the even root function
 def Evenroot(r):
