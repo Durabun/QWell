@@ -9,7 +9,7 @@ from decimal import Decimal
 
 
 m = float((9.11*10**-31)) 
-a = float(10**(-10))
+a = float(2*10**(-10))
 E = float(1.3*1.602*10**-19) 
 V = float(1.602*10**-19) 
 h = (6.626*10**-34)/(2*np.pi)

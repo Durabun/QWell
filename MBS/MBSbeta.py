@@ -9,8 +9,12 @@ from decimal import Decimal
 
 m = float((9.11*10**-31)) 
 a = float(10**(-10))
-E = float(0.8*1.602*10**-19) 
-V = float(1.602*10**-19) 
+b = a
+c = a
+E = float(0.9613*10**-19)
+V1 = float(1.2817*10**-19) 
+V2 = float(1.602*10**-19)
+V3 = 1*V1
 h = (6.626*10**-34)/(2*np.pi)
 #k1 = cmath.sqrt((2*m*E/h**2)) 
 #k2 = cmath.sqrt((2*m*(E-V)/h**2))
@@ -28,48 +32,36 @@ def Pj(kj,xj):
 def K(m,E,V):
 	return cmath.sqrt((2*m*(E-V)/h**2))
 
-n = 2
+Q = np.matrix(((1,0),(0,1)))
+n = 3
 s = 2*(n+1)
-V = np.array((1.2*10**-19,1.6*10**-19))
-thickness = np.array((10**-10,10**-10))
-
-kVect = np.zeros(n+1,dtype=np.complex)
-k=cmath.sqrt((2*m*E/h**2))
-kVect[0] = k
+V = np.array([0,V1,V2,V3])
+X = np.array([a,b,c])
 
 i=0
 j=1
 
-for i in range(n):
-	kVect[j]=K(m,E,V[j-1])
-	j=j+1
-		
-i=0
-j=1
-
-for i in range(n):
+for i in range(s):
+#	print(Q)
 	if i == n:
 		j = 0
-		D = dij(k[i],k[j])
-		Y = D
-		P = Pj(k[j],thickness[i])
-		Y = np.dot(D,P)
+		N = dij(K(m,E,V[i]),K(m,E,V[j]))
+		N = np.dot(N,Pj(K(m,E,V[j]),X[j+1]))
 		break
-	D = dij(k[i],k[j])
-	X = d
-	P = Pj(k[j],thickness[i])
-	X = np.dot(X,P)
-	i = i+1
+	M = dij(K(m,E,V[i]),K(m,E,V[j]))
+	M = np.dot(M,Pi(K(m,E,V[j]),X[i]))
+	Q = np.dot(Q,M)
+	i = j
 	j = j+1
 
+Mat = np.dot(Q,N)
 
 
+print(Mat)
 
-
-
-
-
-
+print(np.absolute(Mat[0,0]**-2))
+F = np.absolute(Mat[0,0]**-2)
+print(F*np.absolute(Mat[1,0]**2))
 
 
 
