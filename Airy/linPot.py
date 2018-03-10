@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from scipy.optimize import*
 from scipy.special import*
 
+#Defining constants by input
 V = (1.602*10**(-19))*float(input("Depth? "))
 m = (9.11*10**(-31))*float(input("Mass? "))
 a = (10**(-10))*float(input("Half Width? "))
@@ -90,12 +91,18 @@ x0 = 0.5
 dx = 0.01
 T = 1
 
+#This section iterates through the even root function
+#When there is an error with the function it breaks through the loop
+#This is because the bound root function just stops after a certain point
 while (T==1):
 	try:
 		EvenR(alpha,a,x0+dx)
 	except:
 		T=0
 		break
+	#This uses a sign approach for determining roots
+	#If the sign of EvenR(x0) is the same as the sign of EvenR(x0+dx)
+	#Then x0 increases by dx. Eventually the signs will not be the same
 	while (np.sign(EvenR(alpha,a,x0))==np.sign(EvenR(alpha,a,x0+dx))):
 		try:
 			EvenR(alpha,a,x0)
@@ -105,7 +112,10 @@ while (T==1):
 			break
 		x0 = x0+dx
 	T = 0
+#There is almost always 1 even root. The above finds where it is located
 
+
+#Same thing but for the odd roots
 while (T==0):
 	try:
 		OddR(alpha,a,x0+dx)
@@ -121,6 +131,7 @@ while (T==0):
 		except:
 			T=1
 			break
+	#At the end of this loop, the number of roots S increases
 	S = S +1
 	try:
 		EvenR(alpha,a,x0+dx)
@@ -136,6 +147,7 @@ while (T==0):
 		except:
 			T=1
 			break
+	#This entire process determines how many roots there are (even and odd)
 	S = S + 1
 
 print("There are "+str(S)+" roots")
@@ -150,6 +162,7 @@ Kvect = np.zeros(S)
 Delta = np.zeros(S)
 Eta = np.zeros(S)
 
+#Thus begins another loop to go through the roots and calculate the energies at each root using Newtons method
 while (i != S):
 	if (i%2 == 0):
 		try:
@@ -172,6 +185,7 @@ while (i != S):
 		
 		if (i==S):
 			break
+		#At this x0, the roots, energies, K vectors, and constants are calc'd
 		Roots[i] = newton(lambda x: EvenR(alpha,a,x),x0)
 		Energies[i] = Energy(alpha,beta,Roots[i])
 		Kvect[i] = TrueKV(alpha,V,m,Energies[i])
@@ -208,7 +222,7 @@ while (i != S):
 				break
 		if (i == S):
 			break
-		
+		#Same done here but for the odd roots
 		Roots[i] = newton(lambda x: OddR(alpha,a,x),x0)
 		Energies[i] = Energy(alpha,beta,Roots[i])
 		Kvect[i] = TrueKV(alpha,V,m,Energies[i])
@@ -225,13 +239,17 @@ while (i != S):
 		except:
 			break
 
+#Displaying important numbers
 print(Roots)
 print(Energies)
 print(Kvect)
 print(Delta)
 print(Eta)
 	
-
+#This section is identical to the finite well sim
+#Z is used to iterate through the bound functions
+#C is used to iterate through the colors for the plots
+#dy is the function offset
 z = 0
 c = 0
 dy = 0
@@ -246,6 +264,7 @@ color = ["r","b","g","c","m","y","k"]
 while z < S:
 	if c == 6:
 		c = 0
+	#Plotting odd functions
 	if z%2 == 1:
 		dy = (1/(1.602*10**(-19)))*Energies[z]
 		plt1 = Psi1O(Eta[z],Kvect[z]) 
@@ -254,6 +273,7 @@ while z < S:
 		plt4 = Psi4O(Eta[z],Kvect[z])
 
 		plt.plot(r1,plt1(r1)+dy,color[c],r2,plt2(r2)+dy,color[c],r3,plt3(r3)+dy,color[c],r4,plt4(r4)+dy,color[c])
+	#Plotting even functions
 	else:
 		dy = (1/(1.602*10**(-19)))*Energies[z]
 		plt1 = Psi1E(Eta[z],Kvect[z]) 
@@ -265,7 +285,7 @@ while z < S:
 
 	z = z+1
 	c = c+1
-
+#Presents all the plots
 plt.show()
 	
 
