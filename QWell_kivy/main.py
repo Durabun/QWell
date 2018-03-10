@@ -9,16 +9,18 @@ from kivy.uix.boxlayout import BoxLayout
 from kivy.properties import ObjectProperty
 from kivy.properties import StringProperty
 
-
+#Defining constants
 h = 6.626*10**(-34)
 h_bar = h/(2*np.pi)
 
+#Defining the kivy class
 class QWellInit(BoxLayout):
 	mass_input = ObjectProperty
 	depth_input = ObjectProperty
 	width_input = ObjectProperty
 	well_status = StringProperty()
-
+	
+	#This is the error check
 	def status_change(self):
 		self.well_status = "Status: OK"		
 		if self.mass_input.text == '' or self.depth_input.text == '' or self.width_input.text == '':
@@ -37,11 +39,16 @@ class QWellInit(BoxLayout):
 #			x = 0
 			i = 1 #Even Roots
 			j = 0 #Odd Roots
-
+			
+			#This is the loop that calculates the roots
+			#R is the nondimensional radius
+			#This iterates through roots at i*pi bound by R (even)
 			while R > i*np.pi:
 				i = i+1
+			#Same thing but with odd roots
 			while R > (1+2*j)*np.pi/2:
 				j = j+1
+			#Sum of even and odd roots
 			S = i+j
 
 			print (str(S)+" root(s) in total.")
@@ -191,7 +198,7 @@ class QWellInit(BoxLayout):
 
 
 
-
+#Kivy class declaration
 class QWellApp(App):
 	pass
 
