@@ -48,7 +48,7 @@ for i in range(S):
                 j = 0
                 N = dij(K(m,E,V[i]),K(m,E,V[j]))
                 #These are the last 2 matrices which "return" to the original wave
-                N = np.dot(N,Pj(K(m,E,V[j]),X[j+1]))
+                N = np.dot(N,Pj(K(m,E,V[j]),X[j]))
                 break
         #Progresses through the first s-2 matrices
         M = dij(K(m,E,V[i]),K(m,E,V[j]))
