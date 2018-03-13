@@ -38,11 +38,17 @@ To run the Finite Square Well simulator in the terminal, type:
 
 To run the Finite Linear Well simulator in the terminal, type:
 > $cd Airy/
+
+
 > $python linPot.py
 
 To run the Multi-Barrier System simulator in the terminal, type:
 > $cd MBS/
+
+
 > $python MBSgamma.py
+
+
 Note that the MBS simulator is still being developed, hence the file name.
 
 ## Known Issues
