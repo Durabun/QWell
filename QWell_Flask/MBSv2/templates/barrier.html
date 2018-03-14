@@ -1,0 +1,14 @@
+<html>
+<body>
+<form action="{{ url_for('barrier')}}" method = "post">
+<p>mass<input type = "text" name = "mass"></p><br>
+<p>energy<input type = "text" name = "energy"></p><br>
+{% for num in range(number) %}
+<p>height {{num+1}} <input type = "text" name = "height" label = "Mass (kg)"></p><br>
+<p>thickness {{num+1}} <input type = "text" name = "thickness" label "Thick"></p><br>
+{% endfor %}
+<input type = "submit">
+</form>
+</body>
+
+</html>
