@@ -34,7 +34,7 @@ def tunnelVector(y,a):
 	return (y/a)*10**(-10)
 
 #Definition of the root radius. This will be determined by the user
-R = radius((206.8*9.11*10**(-31)),(4.69*10**(-11)),(1.6022*10**(-19)))
+R = radius((1183.948*10**(-31)),(4.69*10**(-11)),(1.6022*10**(-19)))
 x = 0
 i = 1
 j = 0
