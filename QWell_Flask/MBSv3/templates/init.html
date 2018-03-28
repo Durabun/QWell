@@ -1,0 +1,27 @@
+<html>
+<head>
+<title> Multi-Barrier System </title>
+<style>
+h2 {text-align: center; color: #800080}
+p {text-align: center; color: white}
+body {background-color: #c0c0c0}
+input.colorbutton {color: red; background:#99ffff}
+p.color {background: #800000}
+</style>
+</head>
+<body>
+<h2> Multi-Barrier System Simulator for Square Wells </h2>
+<p class = "color"> Enter the number of barriers below, then submit. </p>
+<form action="{{ url_for('handle')}}" method = "post">
+	<table align = "center" border = "1" bordercolor = "#339933">
+	<tr>
+	<td>Number of Barriers </td>
+	<td><input type = "text" name = "number" value = "1"></td>
+	</tr>
+	<tr>
+	<th colspan = "2" align = "center"><input label = "SUBMIT" type = "submit" value = "Submit" class = "colorbutton"></th>
+	</tr>
+	</table>
+</form>
+</body>
+</html>

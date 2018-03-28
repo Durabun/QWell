@@ -1,0 +1,43 @@
+<html>
+<head>
+<title> Multi-Barrier System </title>
+<style>
+h2 {text-align: center; color: #800080}
+p {text-align: center; color: white}
+body {background-color: #c0c0c0}
+input.colorbutton {color: red; background:#99ffff}
+p.color {background: #800000}
+</style>
+</head>
+<body>
+<h2> Multi-Barrier System Simulator for Square Wells</h2>
+<p class = "color"> Enter the mass, particle energy, and barrier characteristics below, then submit. </p>
+<p class = "color"> Note that the particle energy cannot equal any barrier heights. </p>
+<form action="{{ url_for('barrier')}}" method = "post">
+<table align = "center" border = "1" bordercolor = "#339933">
+<tr>
+<td align = "center" >Mass (electron masses)</td>
+<td><input type = "text" name = "mass" value = "1"></td>
+</tr>
+<tr>
+<td align = "center" >Particle Energy (eV)</td>
+<td><input type = "text" name = "energy" value = "1.1"></td>
+</tr>
+{% for num in range(number) %}
+<tr>
+<td align = "center" >Barrier height {{num+1}} (eV)</td>
+<td><input type = "text" name = "height" label = "Mass (kg)" value = "1"></td>
+</tr>
+<tr>
+<td align = "center" >Barrier Thickness {{num+1}} (angstrom)</td>
+<td><input type = "text" name = "thickness" label "Thick" value = "1"></td>
+</tr>
+{% endfor %}
+<tr>
+<th colspan = "2" align = "center"><input type = "submit" class = "colorbutton" value = "Submit"></th>
+</tr>
+</table>
+</form>
+</body>
+
+</html>

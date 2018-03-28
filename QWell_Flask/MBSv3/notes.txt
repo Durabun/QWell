@@ -1,0 +1,13 @@
+notes for web app
+
+page 1(init):
+* What is it?
+*What does it simulate?
+*What is going through the walls?
+*Real world applications/example
+
+page 2(barrier):
+*N/A
+
+page 3(display):
+*N/A
