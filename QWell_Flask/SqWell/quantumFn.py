@@ -6,7 +6,9 @@
 
 import numpy as np
 from os import system
+import matplotlib.pyplot as plt
 from scipy.optimize import*
+import os, time, glob
 
 #For a one dimensional well...
 
@@ -112,3 +114,53 @@ def of3(B,K,k,a):
 
 def op3(B,K,k,a):
 	return lambda x: (2*B*np.exp((a-x)*K)*np.sin(a*k))**2
+
+#Flask Plot here
+def Plots(a,S, Bcoeff, TunVec, PropVec,Energy):
+    z = 0
+    r1 = np.arange((-2*a*10**10),(-a*10**10),0.0001)
+    r2 = np.arange((-a*10**10),(a*10**10),0.0001)
+    r3 = np.arange((a*10**10),(2*a*10**10),0.0001)
+    color = ['r','b','g','c','m','y','k']
+
+
+    plt.figure()
+    axes = plt.gca()
+    plt.title("Finite Square Well")
+    plt.xlabel("Angstrom")
+    plt.ylabel("Probability Amplitude")
+    c = 0
+
+    while z < S:
+        if c == 6:
+            c = 0
+        if z%2 == 1:
+            plt1 = op1(Bcoeff[z],TunVec[z],PropVec[z],(a*10**10))
+            plt2 = op2(Bcoeff[z],PropVec[z])
+            plt3 = op3(Bcoeff[z],TunVec[z],PropVec[z],(a*10**10))
+	    
+            plt.plot(r1,plt1(r1)+Energy[z],color[c],r2,plt2(r2)+Energy[z],color[c],r3,plt3(r3)+Energy[z],color[c])
+
+
+        else:
+            plt1 = ep1(Bcoeff[z],TunVec[z],PropVec[z],(a*10**10))
+            plt2 = ep2(Bcoeff[z],PropVec[z])
+            plt3 = ep3(Bcoeff[z],TunVec[z],PropVec[z],(a*10**10))
+	    
+            plt.plot(r1,plt1(r1)+Energy[z],color[c],r2,plt2(r2)+Energy[z],color[c],r3,plt3(r3)+Energy[z],color[c])
+
+
+        z = z +1
+	c = c +1
+
+    if not os.path.isdir('static'):
+        os.mkdir('static')
+    else:
+        for filename in glob.glob(os.path.join('static','*.png')):
+            os.remove(filename)
+    plotfile = os.path.join('static', str(time.time())+'.png')
+    plt.savefig(plotfile)
+    return plotfile
+
+
+    

@@ -113,52 +113,53 @@ def sqCalc():
 	StateEnergy[l] = -1*energy(radFunction(Roots[l],R),R,V)
 	l = l+1
 
-    z = 0
-    r1 = np.arange((-2*a*10**10),(-a*10**10),0.0001)
-    r2 = np.arange((-a*10**10),(a*10**10),0.0001)
-    r3 = np.arange((a*10**10),(2*a*10**10),0.0001)
-    color = ['r','b','g','c','m','y','k']
+    plot = Plots(a,S,Bcoeff,tunnVector,propVector,StateEnergy)
+#    z = 0
+#    r1 = np.arange((-2*a*10**10),(-a*10**10),0.0001)
+#    r2 = np.arange((-a*10**10),(a*10**10),0.0001)
+#    r3 = np.arange((a*10**10),(2*a*10**10),0.0001)
+#    color = ['r','b','g','c','m','y','k']
 
-    plt.figure()
-    axes = plt.gca()
-    plt.title("Finite Square Well")
-    plt.xlabel("Angstrom")
-    plt.ylabel("Probability Amplitude")
-    c = 0
-    while z < S:
-        if c == 6:
-            c = 0
-        if z%2 == 1:
-            plt1 = op1(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
-            plt2 = op2(Bcoeff[z],propVector[z])
-            plt3 = op3(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
+#    plt.figure()
+#    axes = plt.gca()
+#    plt.title("Finite Square Well")
+#    plt.xlabel("Angstrom")
+#    plt.ylabel("Probability Amplitude")
+#    c = 0
+#    while z < S:
+#        if c == 6:
+#            c = 0
+#        if z%2 == 1:
+#            plt1 = op1(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
+#            plt2 = op2(Bcoeff[z],propVector[z])
+#            plt3 = op3(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
 	    
-            plt.plot(r1,plt1(r1)+StateEnergy[z],color[c],r2,plt2(r2)+StateEnergy[z],color[c],r3,plt3(r3)+StateEnergy[z],color[c])
+#            plt.plot(r1,plt1(r1)+StateEnergy[z],color[c],r2,plt2(r2)+StateEnergy[z],color[c],r3,plt3(r3)+StateEnergy[z],color[c])
 
 
-        else:
-            plt1 = ep1(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
-            plt2 = ep2(Bcoeff[z],propVector[z])
-            plt3 = ep3(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
+#        else:
+#            plt1 = ep1(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
+#            plt2 = ep2(Bcoeff[z],propVector[z])
+#            plt3 = ep3(Bcoeff[z],tunnVector[z],propVector[z],(a*10**10))
 	    
-            plt.plot(r1,plt1(r1)+StateEnergy[z],color[c],r2,plt2(r2)+StateEnergy[z],color[c],r3,plt3(r3)+StateEnergy[z],color[c])
+#            plt.plot(r1,plt1(r1)+StateEnergy[z],color[c],r2,plt2(r2)+StateEnergy[z],color[c],r3,plt3(r3)+StateEnergy[z],color[c])
 
 
-        z = z +1
-	c = c +1
+#        z = z +1
+#	c = c +1
 
 
-    if not os.path.isdir('static'):
-        os.mkdir('static')
-    else:
-        for filename in glob.glob(os.path.join('static','*.png')):
-            os.remove(filename)
-    plotfile = os.path.join('static', str(time.time())+'.png')
-    plt.savefig(plotfile)
+#    if not os.path.isdir('static'):
+#        os.mkdir('static')
+#    else:
+#        for filename in glob.glob(os.path.join('static','*.png')):
+#            os.remove(filename)
+#    plotfile = os.path.join('static', str(time.time())+'.png')
+#    plt.savefig(plotfile)
 
 #    plt.show()
 	
-    return render_template("sqDisplay.html", S = S, Energy = StateEnergy, Roots = Roots, PVector = propVector, TVector = tunnVector, PLOT = plotfile)
+    return render_template("sqDisplay.html", S = S, Energy = StateEnergy, Roots = Roots, PVector = propVector, TVector = tunnVector, PLOT = plot)
 
 
 

@@ -4,9 +4,9 @@ from scipy.optimize import*
 from scipy.special import*
 
 #Defining constants by input
-V = (1.602*10**(-19))*float(input("Depth? "))
-m = (9.11*10**(-31))*float(input("Mass? "))
-a = (10**(-10))*float(input("Half Width? "))
+m = (9.11*10**(-31))*float(input("Mass of particle (X times the mass of electron: "))
+V = (1.602*10**(-19))*float(input("Depth of well (eV): "))
+a = (10**(-10))*float(input("Half width of well centered at x=0 (A): "))
 beta = V/a
 hb = (6.626*10**(-34))/(2*np.pi)
 alpha = ((2*m*beta)/(hb**2))**(1./3)
@@ -241,7 +241,8 @@ while (i != S):
 
 #Displaying important numbers
 print(Roots)
-print(Energies)
+print("Energies")
+print(Energies*(1/(1.602*10**-19)))
 print(Kvect)
 print(Delta)
 print(Eta)
@@ -286,6 +287,7 @@ while z < S:
 	z = z+1
 	c = c+1
 #Presents all the plots
+plt.xlabel("Distance (in Angstrom)")
 plt.show()
 	
 

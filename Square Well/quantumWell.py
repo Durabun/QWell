@@ -129,14 +129,13 @@ StateEnergy = np.zeros(S)
 l = 0
 while l < S:
 	Bcoeff[l] = quantumFn.Beven(a*10**(10),propVector[l],tunnVector[l])
-	StateEnergy[l] = -1*quantumFn.energy(quantumFn.radFunction(Roots[l],R),R,V)
+	StateEnergy[l] = (V/(1.602*10**-19))-quantumFn.energy(quantumFn.radFunction(Roots[l],R),R,V)
 	l = l + 2
 l = 1
 while l < S:
 	Bcoeff[l] = quantumFn.Bodd(a*10**(10),propVector[l],tunnVector[l])
-	StateEnergy[l] = -1*quantumFn.energy(quantumFn.radFunction(Roots[l],R),R,V)
+	StateEnergy[l] = (V/(1.602*10**-19))-quantumFn.energy(quantumFn.radFunction(Roots[l],R),R,V)
 	l = l + 2
-
 print ("Coefficients")
 print (Bcoeff)
 print ("Energies")
